@@ -25,7 +25,12 @@ const findCapresId = (voterId) => {
 };
 
 export default async (req, context) => {
-  const body = JSON.parse(req.body);
+  let body = null;
+  try {
+    body = JSON.parse(req.body);
+  } catch (err) {
+    return Response.json(req.body);
+  }
   const { voterId, capresId, type } = {
     voterId: body?.voterId,
     capresId: body?.capresId,
