@@ -17,12 +17,12 @@ export const capres = {
 };
 export const getCountVoters = async (capresId) => {
   try {
-    const count = await (await fetch('.netlify/functions/voters', {
+    const result = await (await fetch('.netlify/functions/voters', {
       method: 'post',
       body: JSON.stringify({ capresId, type: 'count' })
-    })).text();
-    console.log(count);
-    return Number(count) || 0;
+    })).json();
+    console.log(result);
+    return Number(result?.count) || 0;
   } catch (err) {
     console.error(err);
     return 0;

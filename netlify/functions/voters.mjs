@@ -35,7 +35,7 @@ export default async (req, context) => {
 
     switch (type) {
       case 'count':
-        return new Response(getCountVoters(capresId).toString());
+        return new Response({ count: getCountVoters(capresId).toString() });
       case 'post':
         postVoter(capresId, voterId);
         return new Response('true');
