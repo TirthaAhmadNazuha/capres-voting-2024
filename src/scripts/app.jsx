@@ -50,7 +50,9 @@ const App = class extends StateComponent {
       <footer className="bg-indigo-900 px-5 py-5 flex flex-wrap gap-5 justify-evenly">
         <div>
           <h4 className="font-semibold text-indigo-300">Created By</h4>
-          <h2 className="text-2xl text-indigo-50">Tirtha Ahmad Nazuha</h2>
+          <h2 className="text-2xl text-indigo-50" onClick={async () => {
+            console.log(await (await fetch('.netlify/functions/test')).text());
+          }}>Tirtha Ahmad Nazuha</h2>
         </div>
         <div>
           <h4 className="font-semibold text-indigo-300">Contact Me On</h4>

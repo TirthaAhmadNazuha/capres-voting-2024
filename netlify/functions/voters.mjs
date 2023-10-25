@@ -49,7 +49,3 @@ export default async (req, context) => {
     return JSON.stringify({ error, params: context.params, result: req.body });
   }
 };
-
-export const config = {
-  path: '/voter-api/:type'
-};
