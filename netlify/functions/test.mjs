@@ -1,3 +1,3 @@
 export default async (req, context) => {
-  return new Response('hadeh');
+  return new Response(JSON.stringify({ kek: 'Tai' }));
 };

@@ -34,14 +34,14 @@ export default async (req, context) => {
 
   switch (type) {
     case 'count':
-      return Response.json({ count: getCountVoters(capresId) });
+      return new Response(JSON.stringify({ count: getCountVoters(capresId) }));
     case 'post':
       postVoter(capresId, voterId);
-      return Response.json({ status: 'true' });
+      return new Response(JSON.stringify({ status: 'true' }));
     case 'delete':
       deleteVoter(capresId, voterId);
-      return Response.json({ status: 'true' });
+      return new Response(JSON.stringify({ status: 'true' }));
     case 'find':
-      return Response.json({ capresId: findCapresId(voterId) });
+      return new Response(JSON.stringify({ capresId: findCapresId(voterId) }));
   }
 };
