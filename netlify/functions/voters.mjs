@@ -35,17 +35,17 @@ export default async (req, context) => {
 
     switch (type) {
       case 'count':
-        return new Response({ count: getCountVoters(capresId).toString() });
+        return Response.json({ count: getCountVoters(capresId).toString() });
       case 'post':
         postVoter(capresId, voterId);
-        return new Response('true');
+        return Response.json({ status: 'true' });
       case 'delete':
         deleteVoter(capresId, voterId);
-        return new Response('true');
+        return Response.json({ status: 'true' });
       case 'find':
-        return new Response(findCapresId());
+        return Response.json({ capresId: findCapresId() });
     }
   } catch (error) {
-    return new Response({ error, params: context.params, result: req.body });
+    return Response.json({ error, params: context.params, result: req.body });
   }
 };
