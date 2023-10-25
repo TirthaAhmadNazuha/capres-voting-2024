@@ -29,7 +29,7 @@ export default async (req, context) => {
   try {
     body = JSON.parse(req.body);
   } catch (err) {
-    return Response.json(req.body);
+    return Response.json(req);
   }
   const { voterId, capresId, type } = {
     voterId: body?.voterId,
