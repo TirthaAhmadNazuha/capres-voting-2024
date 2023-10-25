@@ -17,7 +17,7 @@ export const capres = {
 };
 export const getCountVoters = async (capresId) => {
   try {
-    const result = await (await fetch('.netlify/functions/voters/count', {
+    const result = await (await fetch('.netlify/functions/voters?type=count', {
       method: 'post',
       body: { capresId, type: 'count' }
     })).json();
@@ -30,7 +30,7 @@ export const getCountVoters = async (capresId) => {
 };
 export const postVoter = async (capresId, voterId) => {
   try {
-    await fetch('.netlify/functions/voters/post', {
+    await fetch('.netlify/functions/voters?type=post', {
       method: 'post',
       body: JSON.stringify({ voterId, capresId })
     });
@@ -40,7 +40,7 @@ export const postVoter = async (capresId, voterId) => {
 };
 export const deleteVoter = async (capresId, voterId) => {
   try {
-    await fetch('.netlify/functions/voters/delete', {
+    await fetch('.netlify/functions/voters?type=delete', {
       method: 'post',
       body: JSON.stringify({ voterId, capresId })
     });
@@ -51,7 +51,7 @@ export const deleteVoter = async (capresId, voterId) => {
 
 export const findCapresId = async (voterId) => {
   try {
-    const result = await (await fetch('.netlify/functions/voters/find', {
+    const result = await (await fetch('.netlify/functions/voters?type=find', {
       method: 'post',
       body: JSON.stringify({ voterId })
     })).text();

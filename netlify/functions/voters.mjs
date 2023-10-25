@@ -26,7 +26,7 @@ const findCapresId = (voterId) => {
 
 export default async (req, context) => {
   const body = req.body;
-  const { type } = req.params;
+  const { type } = req.query;
   const { voterId, capresId } = {
     voterId: body?.voterId,
     capresId: body?.capresId,
