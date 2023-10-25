@@ -36,8 +36,8 @@ const App = class extends StateComponent {
 
   Header() {
     return (
-      <header>
-        <div className="bg-indigo-900 p-2 font-semibold border-t-4 border-yellow-400 flex italic justify-center text-white">#Capres<span className="text-red-500">2024</span></div>
+      <header className="fixed top-0 left-0 right-0">
+        <div className="bg-indigo-900 p-2 font-semibold flex italic justify-center text-white">#Capres<span className="text-red-500">2024</span></div>
         <nav className="bg-indigo-200 flex p-3 pt-4 justify-center">
           <h1 className="text-3xl font-medium"><span className="text-lg mr-1 text-indigo-800">Pre</span>Voting Capres 2024</h1>
         </nav>
@@ -87,7 +87,7 @@ const App = class extends StateComponent {
       <div className="app min-h-screen">
         <this.Header />
         <main>
-          <div className="flex px-4 bg-indigo-50 py-14 gap-6 justify-center items-stretch flex-wrap">
+          <div className="flex pt-40 px-4 bg-indigo-50 py-14 gap-6 justify-center items-stretch flex-wrap">
             {Object.keys(capres).map((no) => {
               /** @type {{nama: string, partai: string, image: string}} */
               const calo = capres[no];
@@ -110,7 +110,7 @@ const App = class extends StateComponent {
                 setVoteCount(count);
               }, 1000);
               return (
-                <article className={`bg-gradient-to-br bg-indigo-100 p-3 rounded-2xl w-[320px] max-w-full flex flex-col items-start`}>
+                <article className={`bg-gradient-to-br bg-indigo-100 p-3 mb-3 rounded-2xl w-[320px] max-w-full flex flex-col items-start`}>
                   <div className="w-full bg-indigo-50 rounded-xl" style={{ background: 'linear-gradient(to bottom, rgb(238, 242, 255), rgb(224, 231, 255))' }}>
                     <img src={calo.image} alt={'Profile ' + calo.nama} className="mt-[-40px]" />
                     <div className="bg-indigo-800 px-4 py-1 relative rounded-b-2xl">

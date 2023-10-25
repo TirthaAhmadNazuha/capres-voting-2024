@@ -26,26 +26,26 @@ const findCapresId = (voterId) => {
 
 export default async (req, context) => {
   try {
-    const { type } = context.params;
     const body = JSON.parse(req.body);
-    const { voterId, capresId } = {
+    const { voterId, capresId, type } = {
       voterId: body?.voterId,
       capresId: body?.capresId,
+      type: body?.type
     };
 
     switch (type) {
       case 'count':
-        return getCountVoters(capresId);
+        return new Response(getCountVoters(capresId).toString());
       case 'post':
         postVoter(capresId, voterId);
-        break;
+        return new Response('true');
       case 'delete':
         deleteVoter(capresId, voterId);
-        break;
+        return new Response('true');
       case 'find':
-        return findCapresId();
+        return new Response(findCapresId());
     }
   } catch (error) {
-    return JSON.stringify({ error, params: context.params, result: req.body });
+    return new Response({ error, params: context.params, result: req.body });
   }
 };

@@ -1,3 +1,3 @@
 export default async (req, context) => {
-  return new Response('Kontol');
+  return new Response('hadeh');
 };
