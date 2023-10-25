@@ -26,10 +26,10 @@ const findCapresId = (voterId) => {
 
 export default async (req, context) => {
   const body = req.body;
-  const { voterId, capresId, type } = {
+  const { type } = req.params;
+  const { voterId, capresId } = {
     voterId: body?.voterId,
     capresId: body?.capresId,
-    type: body?.type
   };
 
   switch (type) {
@@ -44,5 +44,5 @@ export default async (req, context) => {
     case 'find':
       return new Response(JSON.stringify({ capresId: findCapresId(voterId) }));
   }
-  return new Response(JSON.stringify({ message: `type not valid: ${type}` }));
+  return new Response(JSON.stringify({ message: `type not valid: ${type}`, voterId }));
 };
