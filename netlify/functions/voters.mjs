@@ -46,6 +46,6 @@ export default async (req, context) => {
         return Response.json({ capresId: findCapresId() });
     }
   } catch (error) {
-    return Response.json({ error, params: context.params, result: req.body });
+    return Response.json({ error: error.toString(), body });
   }
 };
