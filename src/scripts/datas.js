@@ -21,6 +21,7 @@ export const getCountVoters = async (capresId) => {
       method: 'post',
       body: JSON.stringify({ capresId, type: 'count' })
     })).text();
+    console.log(count);
     return Number(count) || 0;
   } catch (err) {
     console.error(err);
