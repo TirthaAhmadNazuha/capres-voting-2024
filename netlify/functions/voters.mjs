@@ -25,27 +25,23 @@ const findCapresId = (voterId) => {
 };
 
 export default async (req, context) => {
-  try {
-    const body = JSON.parse(req.body);
-    const { voterId, capresId, type } = {
-      voterId: body?.voterId,
-      capresId: body?.capresId,
-      type: body?.type
-    };
+  const body = JSON.parse(req.body);
+  const { voterId, capresId, type } = {
+    voterId: body?.voterId,
+    capresId: body?.capresId,
+    type: body?.type
+  };
 
-    switch (type) {
-      case 'count':
-        return Response.json({ count: getCountVoters(capresId).toString() });
-      case 'post':
-        postVoter(capresId, voterId);
-        return Response.json({ status: 'true' });
-      case 'delete':
-        deleteVoter(capresId, voterId);
-        return Response.json({ status: 'true' });
-      case 'find':
-        return Response.json({ capresId: findCapresId() });
-    }
-  } catch (error) {
-    return Response.json({ error: error.toString(), body });
+  switch (type) {
+    case 'count':
+      return Response.json({ count: getCountVoters(capresId).toString() });
+    case 'post':
+      postVoter(capresId, voterId);
+      return Response.json({ status: 'true' });
+    case 'delete':
+      deleteVoter(capresId, voterId);
+      return Response.json({ status: 'true' });
+    case 'find':
+      return Response.json({ capresId: findCapresId() });
   }
 };
