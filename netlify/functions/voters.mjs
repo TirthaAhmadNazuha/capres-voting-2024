@@ -26,10 +26,10 @@ const findCapresId = (voterId) => {
 
 export default async (req, context) => {
   const body = req.body;
-  const { type } = req.query;
   const { voterId, capresId } = {
     voterId: body?.voterId,
     capresId: body?.capresId,
+    type: body?.type || 'KONTOL',
   };
 
   switch (type) {
