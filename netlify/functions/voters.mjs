@@ -29,7 +29,7 @@ export default async (req, context) => {
   try {
     body = JSON.parse(req.body);
   } catch (err) {
-    return Response.json(req);
+    return Response.json({ type: typeof req.body });
   }
   const { voterId, capresId, type } = {
     voterId: body?.voterId,
@@ -39,7 +39,7 @@ export default async (req, context) => {
 
   switch (type) {
     case 'count':
-      return Response.json({ count: getCountVoters(capresId).toString() });
+      return Response.json({ count: getCountVoters(capresId) });
     case 'post':
       postVoter(capresId, voterId);
       return Response.json({ status: 'true' });
@@ -47,6 +47,6 @@ export default async (req, context) => {
       deleteVoter(capresId, voterId);
       return Response.json({ status: 'true' });
     case 'find':
-      return Response.json({ capresId: findCapresId() });
+      return Response.json({ capresId: findCapresId(voterId) });
   }
 };
