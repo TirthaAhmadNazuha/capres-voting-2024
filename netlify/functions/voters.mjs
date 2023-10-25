@@ -44,4 +44,5 @@ export default async (req, context) => {
     case 'find':
       return new Response(JSON.stringify({ capresId: findCapresId(voterId) }));
   }
+  return new Response(JSON.stringify({ message: `type not valid: ${type}` }));
 };
