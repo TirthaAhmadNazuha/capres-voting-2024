@@ -3,13 +3,13 @@ import { writeFile, readFile } from 'fs/promises';
 
 const saveToFlie = async (voters) => {
   let dataVoters = JSON.stringify(voters);
-  await writeFile('./public/data-vote.json', dataVoters, 'utf-8');
+  await writeFile('./data-vote.json', dataVoters, 'utf-8');
 };
 
 export const handler = async (req, context) => {
   const { capresId, voterId, type } = JSON.parse(req.body);
   /**@type {Object<string, { votes: string[] }>} */
-  const voters = JSON.parse(await readFile('./public/data-vote.json', 'utf-8'));
+  const voters = JSON.parse(await readFile('./data-vote.json', 'utf-8'));
   if (type == 'get') return {
     statusCode: 200,
     body: JSON.stringify({
