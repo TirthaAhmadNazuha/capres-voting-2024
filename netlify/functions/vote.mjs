@@ -9,7 +9,12 @@ const saveToFlie = async (voters) => {
 export const handler = async (req, context) => {
   const { capresId, voterId, type } = JSON.parse(req.body);
   /**@type {Object<string, { votes: string[] }>} */
-  const voters = JSON.parse(await readFile('./data-vote.json', 'utf-8'));
+  let voters;
+  try {
+    voters = JSON.parse(await readFile('./data-vote.json', 'utf-8'));
+  } catch (_) {
+    voters = JSON.parse('{"no-1":{"nama":"Ganjar Pranowo","votes":[]},"no-2":{"nama":"Prabowo Subianto","votes":[]},"no-3":{"nama":"Anis Baswedan","votes":[]}}');
+  }
   if (type == 'get') return {
     statusCode: 200,
     body: JSON.stringify({
