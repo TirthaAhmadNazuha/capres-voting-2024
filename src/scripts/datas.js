@@ -15,49 +15,31 @@ export const capres = {
     image: 'Anies-Rasyid-Baswedan.webp',
   },
 };
-export const getCountVoters = async (capresId) => {
-  try {
-    const result = await (await fetch('.netlify/functions/voters', {
-      method: 'post',
-      body: JSON.stringify({ capresId, type: 'count' })
-    })).json();
-    console.log(result);
-    return Number(result?.count) || 0;
-  } catch (err) {
-    console.error(err);
-    return 0;
-  }
+export const getCountVoters = async () => {
+  const result = await (await fetch('.netlify/functions/vote', {
+    method: 'post',
+    body: JSON.stringify({ type: 'get' })
+  })).json();
+  return result;
 };
 export const postVoter = async (capresId, voterId) => {
-  try {
-    await fetch('.netlify/functions/voters', {
-      method: 'post',
-      body: JSON.stringify({ voterId, capresId, type: 'post' })
-    });
-  } catch (err) {
-    console.error(err);
-  }
+  await fetch('.netlify/functions/vote', {
+    method: 'post',
+    body: JSON.stringify({ capresId, voterId, type: 'post' }),
+  });
 };
 export const deleteVoter = async (capresId, voterId) => {
-  try {
-    await fetch('.netlify/functions/voters', {
-      method: 'post',
-      body: JSON.stringify({ voterId, capresId, type: 'delete' })
-    });
-  } catch (err) {
-    console.error(err);
-  }
+  await fetch('.netlify/functions/vote', {
+    method: 'post',
+    body: JSON.stringify({ capresId, voterId, type: 'delete' })
+  });
 };
 
-export const findCapresId = async (voterId) => {
-  try {
-    const result = await (await fetch('.netlify/functions/voters', {
-      method: 'post',
-      body: JSON.stringify({ voterId, type: 'find' })
-    })).text();
-    return result;
-  } catch (err) {
-    console.error(err);
-    return '';
-  }
-};
+export const findVoter = async (voterId) => {
+  const result = await (await fetch('.netlify/functions/vote', {
+    method: 'post',
+    body: JSON.stringify({ voterId, type: 'find' })
+  })).json();
+  return result;
+}
+

@@ -1,13 +1,16 @@
-import { StateComponent, fullyPrepared, usingState } from 'amber';
+import { StateComponent, fullyPrepared } from 'amber';
 import '../styles/index.sass';
-import { capres, deleteVoter, findCapresId, getCountVoters, postVoter } from './datas';
+import { capres, deleteVoter, getCountVoters, postVoter, findVoter } from './datas';
 import { nanoid } from 'nanoid';
 
 const App = class extends StateComponent {
   constructor() {
     super();
     this.state = {
-      capressSelectedId: ''
+      capressSelectedId: '',
+      'no-1': 0,
+      'no-2': 0,
+      'no-3': 0,
     };
     this.defaultStateBtn = {
       className: 'w-full p-2 bg-indigo-800 font-medium text-white rounded-full mt-auto transition duration-300',
@@ -36,7 +39,7 @@ const App = class extends StateComponent {
 
   Header() {
     return (
-      <header className="fixed top-0 left-0 right-0">
+      <header className="fixed top-0 left-0 right-0 z-20">
         <div className="bg-indigo-900 p-2 font-semibold flex italic justify-center text-white">#Capres<span className="text-red-500">2024</span></div>
         <nav className="bg-indigo-200 flex p-3 pt-4 justify-center">
           <h1 className="text-3xl font-medium"><span className="text-lg mr-1 text-indigo-800">Pre</span>Voting Capres 2024</h1>
@@ -83,6 +86,14 @@ const App = class extends StateComponent {
   }
 
   render() {
+    getCountVoters()
+      .then((count) => {
+        this.setState(count);
+      });
+    setInterval(async () => {
+      const count = await getCountVoters();
+      this.setState(count);
+    }, 3000);
     return (
       <div className="app min-h-screen">
         <this.Header />
@@ -104,18 +115,13 @@ const App = class extends StateComponent {
                 await postVoter(this.selectedCapresId, this.voterId);
               });
 
-              const [voteCountState, setVoteCount] = usingState(0);
-              setInterval(async () => {
-                const count = await getCountVoters(no);
-                setVoteCount(count);
-              }, 1000);
               return (
                 <article className={`bg-gradient-to-br bg-indigo-100 p-3 mb-3 rounded-2xl w-[320px] max-w-full flex flex-col items-start`}>
                   <div className="w-full bg-indigo-50 rounded-xl" style={{ background: 'linear-gradient(to bottom, rgb(238, 242, 255), rgb(224, 231, 255))' }}>
                     <img src={calo.image} alt={'Profile ' + calo.nama} className="mt-[-40px]" />
                     <div className="bg-indigo-800 px-4 py-1 relative rounded-b-2xl">
                       <span className="text-lg font-semibold text-white italic">Voters</span>
-                      <h2 className="absolute top-[-100%] right-4 py-2 px-3 rounded-md shadow-md text-indigo-900 skew-y-[-4deg] italic bg-indigo-200 text-4xl font-semibold">{voteCountState}</h2>
+                      <h2 className="absolute top-[-100%] right-4 py-2 px-3 rounded-md shadow-md text-indigo-900 skew-y-[-4deg] italic bg-indigo-200 text-4xl font-semibold">{this.state[no]}</h2>
                     </div>
                   </div>
                   <h1 className="text-2xl font-semibold text-indigo-900 mt-3">{calo.nama}</h1>
@@ -133,7 +139,7 @@ const App = class extends StateComponent {
 
   async onConnected() {
     await fullyPrepared();
-    const capresId = await findCapresId(this.voterId);
+    const { capresId } = await findVoter(this.voterId);
     if (capresId) {
       this.clearSelectBtns();
       this.element.querySelectorAll('main article > button').forEach((btn) => {
